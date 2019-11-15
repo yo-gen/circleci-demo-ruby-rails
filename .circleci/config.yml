@@ -89,7 +89,7 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
-    publish-github-release:
+  publish-github-release:
       docker:
         - image: cibuilds/github:0.10
       steps:
@@ -109,3 +109,11 @@ workflows:
           requires:
             - build
       - publish-github-release
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^\d+\.\d+\.\d+$/
+
